@@ -7,8 +7,7 @@ import { useMessageStore } from '@/stores/message'
 
 const organizer = ref<Organizer>({
   id: 0,
-  organizationName: '',
-  address: ''
+  name: ''
 })
 
 const router = useRouter()
@@ -36,23 +35,23 @@ function saveOrganizer() {
       <!-- Organization Name -->
       <div>
         <label class="block text-lg font-medium text-gray-700">Organization Name</label>
-        <input v-model="organizer.organizationName" type="text" placeholder="Organization Name" 
+        <input v-model="organizer.name" type="text" placeholder="Organization Name" 
                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
                       focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
       </div>
 
       <!-- Address -->
-      <div>
+      <!-- <div>
         <label class="block text-lg font-medium text-gray-700">Address</label>
         <input v-model="organizer.address" type="text" placeholder="Address" 
                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
                       focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
-      </div>
+      </div> -->
 
       <!-- Submit Button -->
       <div>
-        <button class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 
-                       transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <button class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 
+                       transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500">
           Submit
         </button>
       </div>

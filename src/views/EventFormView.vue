@@ -1,9 +1,13 @@
  <script setup lang="ts">
-import type { Event } from '@/types'
-import { ref } from 'vue'
+import type { Event, Organizer } from '@/types'
+import OrganizerService from '@/services/OganizerService'
+import { onMounted, ref } from 'vue'
 import EventService from '@/services/EventService'
+import BaseInput from '@/components/BaseInput.vue'
 import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
+import BaseSelect from '@/components/BaseSelect.vue'
+
 
 const event = ref<Event>({
   id: 0,
@@ -14,7 +18,11 @@ const event = ref<Event>({
   date: '',
   time: '',
   petsAllowed: false,
-  organizer: ''
+  // organizer: ''
+  organizer: {
+    id: 0,
+    name: ''
+  }
 })
 
 const router = useRouter()
@@ -33,6 +41,17 @@ function saveEvent() {
       router.push({ name: 'network-error-view' })
     })
 }
+
+const organizers = ref<Organizer[]>([])
+onMounted(() => {
+  OrganizerService.getOrganizers()
+  .then((response) => {
+    organizers.value = response.data
+  })
+  .catch(() => {
+    router.push({name: 'network-error-view'})
+  })
+})
 </script>
 
 <template>
@@ -40,49 +59,35 @@ function saveEvent() {
     <h1 class="text-3xl font-semibold mb-6 text-center">Create an event</h1>
     
     <form @submit.prevent="saveEvent" class="space-y-4">
-      <!-- Category Input -->
       <div>
-        <label class="block text-lg font-medium text-gray-700">Category</label>
-        <input v-model="event.category" type="text" placeholder="Category" 
-               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-                      focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        <BaseInput v-model="event.category" type="text" label="Category"/>
       </div>
 
-      <!-- Title and Description -->
       <div>
         <h3 class="text-xl font-semibold mb-2">Name & describe your event</h3>
-        <label class="block text-lg font-medium text-gray-700">Title</label>
-        <input v-model="event.title" type="text" placeholder="Title" 
-               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-                      focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        <BaseInput v-model="event.title" type="text" label="Title"/>
       </div>
       
       <div>
-        <label class="block text-lg font-medium text-gray-700">Description</label>
-        <input v-model="event.description" type="text" placeholder="Description" 
-               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-                      focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        <BaseInput v-model="event.description" type="text" label="Description"/>
       </div>
 
-      <!-- Location -->
       <div>
         <h3 class="text-xl font-semibold mb-2">Where is your event?</h3>
-        <label class="block text-lg font-medium text-gray-700">Location</label>
-        <input v-model="event.location" type="text" placeholder="Location" 
-               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-                      focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        <BaseInput v-model="event.location" type="text" label="Location"/>
+      </div>
+    <div>
+        <h3 class="text-lg font-semibold mb-2">Who is Your Organizer?</h3>
+        <label class="block text-sm font-medium text-gray-700">Select an Organizer</label>
+        <BaseSelect v-model="event.organizer.id" :options="organizers" label="Organizer" class="select-field"/>
       </div>
 
-      <!-- Submit Button -->
       <div>
-        <button class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 
-                       transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          Submit
-        </button>
+        <button class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 
+                       transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
       </div>
     </form>
 
-    <!-- JSON Preview -->
-    <pre class="mt-4 bg-gray-100 p-4 rounded-md text-sm">{{ event }}</pre>
+    <!-- <pre class="mt-4 bg-gray-100 p-4 rounded-md text-sm">{{ event }}</pre> -->
   </div>
 </template>
