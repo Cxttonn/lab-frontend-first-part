@@ -21,3 +21,4 @@ export default {
     return apiClient.post('/events', event)
   }
 }
+

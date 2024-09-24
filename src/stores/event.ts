@@ -1,5 +1,6 @@
 import type { EventState, Event } from '@/types'
 import { defineStore } from 'pinia'
+
 export const useEventStore = defineStore('event', {
   state: (): EventState => ({
     event: null
@@ -7,6 +8,9 @@ export const useEventStore = defineStore('event', {
   actions: {
     setEvent(event: Event): void {
       this.event = event
+    },
+    clearEvent(): void{
+      this.event = null
     }
   }
 })

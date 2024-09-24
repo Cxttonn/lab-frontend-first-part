@@ -21,7 +21,7 @@ export interface Organizer {
 export interface Participant {
   id: number
   name: string
-  TelNo: string
+  telNo: string
 
 }
 
