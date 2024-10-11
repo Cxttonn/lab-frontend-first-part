@@ -13,9 +13,9 @@ export default {
       fontFamily: {
         sans: ['Avenir', 'Helvetica', 'Arial', 'sans-serif'],
       },
-      //this is animation class
+      // this is animation class
       animation: {
-        fade: 'yellowFade 3s ease-in-out;',
+        fade: 'yellowFade 3s ease-in-out',
       },
       keyframes: {
         yellowFade: {
@@ -25,6 +25,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms') // Use the correct package name
+  ],
 } satisfies Config
-

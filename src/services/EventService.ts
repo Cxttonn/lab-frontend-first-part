@@ -1,24 +1,28 @@
-import axios from 'axios'
+// import axios from 'axios
+import apiClient from './AxiosClient'
+import type { AxiosResponse } from 'axios'
 
-const apiClient = axios.create({
-  // baseURL: 'http://localhost:8080',
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-})
+// const apiClient = axios.create({
+//   baseURL: import.meta.env.VITE_BACKEND_URL,
+//   withCredentials: false,
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json'
+//   }
+// })
 
 export default {
   getEvents(perPage: Number, page: Number) {
     return apiClient.get('/events?_limit=' + perPage + '&_page=' + page)
   },
   getEvent(id: number) {
-    return apiClient.get('/events/' + id)
+    return apiClient.get('/events/' + id.toString())
   },
   saveEvent(event: Event){
     return apiClient.post('/events', event)
+  },
+  getEventsByKeyword(keyword: string, perPage: number, page: number): Promise<AxiosResponse<Event[]>>{
+    return apiClient.get<Event[]>('/events?title=' +keyword + '&_limit=' + perPage + '&_page=' + page)
   }
 }
 

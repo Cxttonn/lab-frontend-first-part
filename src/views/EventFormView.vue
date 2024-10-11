@@ -7,6 +7,7 @@ import BaseInput from '@/components/BaseInput.vue'
 import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
 import BaseSelect from '@/components/BaseSelect.vue'
+import ImageUpload from '@/components/ImageUpload.vue'
 
 
 const event = ref<Event>({
@@ -18,11 +19,11 @@ const event = ref<Event>({
   date: '',
   time: '',
   petsAllowed: false,
-  // organizer: ''
   organizer: {
     id: 0,
     name: ''
-  }
+  },
+  images: []
 })
 
 const router = useRouter()
@@ -83,11 +84,15 @@ onMounted(() => {
       </div>
 
       <div>
+        <h3 class="text-xl font-semibold mb-2">The image of the Event</h3>
+        <ImageUpload v-model="event.images"/>
+      </div>
+      <div>
         <button class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 
                        transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500">Submit</button>
       </div>
     </form>
 
-    <!-- <pre class="mt-4 bg-gray-100 p-4 rounded-md text-sm">{{ event }}</pre> -->
+    <pre class="mt-4 bg-gray-100 p-4 rounded-md text-sm">{{ event }}</pre>
   </div>
 </template>

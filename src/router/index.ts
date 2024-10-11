@@ -12,6 +12,8 @@ import EventService from '@/services/EventService'
 import AddEventView from '@/views/EventFormView.vue'
 import AddOrganizerView from '@/views/OrganizerFormView.vue'
 import { useEventStore } from '@/stores/event'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +25,16 @@ const router = createRouter({
       props: (route) => ({ page: parseInt(route.query.page?.toString() || '1') })
     },
     {
+      path:'/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
+    },
+    {
       path: '/event/:id',
       name: 'event-layout-view',
       component: EventLayoutView,
@@ -32,7 +44,6 @@ const router = createRouter({
         const eventStore = useEventStore()
         return EventService.getEvent(id)
           .then((response) => {
-            // need to setup the data for the event
             eventStore.setEvent(response.data)
           })
           .catch((error) => {

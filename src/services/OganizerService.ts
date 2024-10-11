@@ -1,20 +1,17 @@
 import type { Organizer } from '@/types'
-import axios from 'axios'
+// import axios from 'axios'
+import apiClient from './AxiosClient'
 
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL, 
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-})
+// const apiClient = axios.create({
+//   baseURL: import.meta.env.VITE_BACKEND_URL, 
+//   withCredentials: false,
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json'
+//   }
+// })
 
-export default {
-//   getOrganizers(perPage: Number, page: Number) {
-//     return apiClient.get('/organizers?_limit=' + perPage + '&_page=' + page)
-//   },
-  
+export default {  
   getOrganizer(id: number) {
     return apiClient.get('/organizers/' + id)
   },
@@ -25,4 +22,5 @@ export default {
   getOrganizers(){
     return apiClient.get('/organizers')
   }
+  
 }
